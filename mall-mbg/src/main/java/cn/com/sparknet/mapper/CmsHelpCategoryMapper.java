@@ -2,8 +2,9 @@ package cn.com.sparknet.mapper;
 
 import cn.com.sparknet.model.CmsHelpCategory;
 import cn.com.sparknet.model.CmsHelpCategoryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CmsHelpCategoryMapper {
     long countByExample(CmsHelpCategoryExample example);

@@ -5,7 +5,6 @@ import java.io.Serializable;
 
 public class CmsHelpCategory implements Serializable {
     private Long id;
-
     private String name;
 
     @ApiModelProperty(value = "分类图标")

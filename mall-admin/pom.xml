@@ -10,12 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mall-admin</artifactId>
+
+<dependencies>
+    <!--MyBatis分页插件starter-->
     <dependency>
         <groupId>cn.com.sparknet</groupId>
         <artifactId>mall-mbg</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </dependency>
-<dependencies>
-    <!--MyBatis分页插件starter-->
+    <dependency>
+        <groupId>cn.com.sparknet</groupId>
+        <artifactId>mall-commom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
     <dependency>
         <groupId>com.github.pagehelper</groupId>
         <artifactId>pagehelper-spring-boot-starter</artifactId>

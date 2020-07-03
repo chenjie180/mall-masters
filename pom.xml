@@ -6,6 +6,7 @@
     <modules>
         <module>mall-admin</module>
         <module>mall-mbg</module>
+        <module>mall-commom</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -26,6 +27,8 @@
         <mysql.version>8.0.15</mysql.version>
         <pagehelper-starter.version>1.2.10</pagehelper-starter.version>
         <mybatis.version>3.4.6</mybatis.version>
+        <swagger2.version>2.7.0</swagger2.version>
+        <spring-data-commons.version>2.1.5.RELEASE</spring-data-commons.version>
     </properties>
 
     <dependencies>
@@ -72,6 +75,23 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+            <!--Swagger-UI API文档生产工具-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <!--SpringData工具包-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring-data-commons.version}</version>
             </dependency>
         </dependencies>
 
