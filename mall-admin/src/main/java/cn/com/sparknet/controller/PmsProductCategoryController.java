@@ -31,9 +31,9 @@ public class PmsProductCategoryController {
                                                            @RequestParam(defaultValue = "5",name = "pageSize") int pageSize){
         List<PmsProductCategory> pmsProductCategories = pmsProductCategoryService.selectPmsProductCategoryByPage(parentId, pageNum, pageSize);
         if(StringUtils.isEmpty(pmsProductCategories)){
-          return   CommonResult.failed("查询失败");
+            return   CommonResult.failed("查询失败");
         }else{
-          return   CommonResult.success(CommonPage.restPage(pmsProductCategories));
+            return   CommonResult.success(CommonPage.restPage(pmsProductCategories));
         }
     }
 
@@ -41,8 +41,8 @@ public class PmsProductCategoryController {
     @ApiOperation(value = "修改商品分类导航栏状态")
     @RequestMapping(value = "/pmsProductCategory/updateNavStatus",method = RequestMethod.POST)
     public CommonResult updatePmsProductCategoryNavStatusById(@RequestParam(name ="id" ) List<Long> ids,
-                                                           @RequestParam(name = "navStatus") int navStatus
-                                                           ){
+                                                              @RequestParam(name = "navStatus") int navStatus
+    ){
         int i = pmsProductCategoryService.updatePmsProductCategoryNavStatusById(ids, navStatus);
         if(i>0){
             return   CommonResult.success(i);
@@ -54,7 +54,7 @@ public class PmsProductCategoryController {
     @ApiOperation(value = "修改商品分类显示状态")
     @RequestMapping(value = "/pmsProductCategory/updateShowStatus",method = RequestMethod.POST)
     public CommonResult updatePmsProductCategoryShowStatusById(@RequestParam(name ="id" ) List<Long> ids,
-                                                              @RequestParam(name = "showStatus") int showStatus
+                                                               @RequestParam(name = "showStatus") int showStatus
     ){
         int i = pmsProductCategoryService.updatePmsProductCategoryShowStatusById(ids, showStatus);
         if(i>0){
@@ -103,7 +103,7 @@ public class PmsProductCategoryController {
     @RequestMapping(value = "/pmsProductCategory/{id}",method = RequestMethod.POST)
     public CommonResult selectPmsProductCategoryInfoById(@PathVariable(value ="id") Long id){
         PmsProductCategory pmsProductCategory = pmsProductCategoryService.selectPmsProductCategoryInfoById(id);
-       System.out.println(pmsProductCategory);
+        System.out.println(pmsProductCategory);
         if(StringUtils.isEmpty(pmsProductCategory)){
             return   CommonResult.failed("查询失败");
         }else{
@@ -117,7 +117,7 @@ public class PmsProductCategoryController {
     public CommonResult updatePmsProductCategoryInfoById(@PathVariable(value ="id") Long id,
                                                          @RequestBody PmsProductCategoryParam pmsProductCategoryParam){
         int i = pmsProductCategoryService.updatePmsProductCategoryInfoById(id, pmsProductCategoryParam);
-        if(i>1){
+        if(i>0){
             return   CommonResult.success(i);
         }else{
             return   CommonResult.failed("修改失败");

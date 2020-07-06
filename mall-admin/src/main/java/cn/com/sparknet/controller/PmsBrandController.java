@@ -27,8 +27,8 @@ public class PmsBrandController {
     @ApiOperation("分页查询品牌集合")
     @RequestMapping(value = "brand/list",method = RequestMethod.POST)
     public CommonResult<CommonPage<PmsBrand>> selectBrandListbyPage(@RequestParam("name") String name,
-                                                        @RequestParam(value ="pageNum",defaultValue = "1") int pageNum,
-                                                        @RequestParam(value ="pageSize",defaultValue = "5") int pageSize){
+                                                                    @RequestParam(value ="pageNum",defaultValue = "1") int pageNum,
+                                                                    @RequestParam(value ="pageSize",defaultValue = "5") int pageSize){
         List<PmsBrand> pmsBrandList = pmsBrandService.selectBrandListbyPage(name, pageNum, pageSize);
         CommonResult<CommonPage<PmsBrand>> success = CommonResult.success(CommonPage.restPage(pmsBrandList));
         return success;
@@ -49,7 +49,7 @@ public class PmsBrandController {
     @ApiOperation("是否是品牌制造商")
     @RequestMapping(value = "brand/update/showStatus",method = RequestMethod.POST)
     public CommonResult  updateBrandShowStatus(@RequestParam("ids") List<Long> ids,
-                                                  @RequestParam("showStatus") int showStatus){
+                                               @RequestParam("showStatus") int showStatus){
         int i = pmsBrandService.updateBrandShowStatus(ids, showStatus);
         if(i>0){
             return  CommonResult.success(i);
@@ -63,27 +63,27 @@ public class PmsBrandController {
     @RequestMapping(value = "brand/{id}",method = RequestMethod.POST)
     public CommonResult  selectBrandById(@PathVariable(name ="id" ) long id){
         PmsBrand pmsBrand = pmsBrandService.selectBrandById(id);
-            return  CommonResult.success(pmsBrand);
+        return  CommonResult.success(pmsBrand);
     }
 
     @ApiOperation("通过id修改品牌信息")
     @RequestMapping(value = "brand/update/{id}",method = RequestMethod.POST)
     public CommonResult  updateBrandInfoById(@PathVariable(name ="id" ) long id,
                                              @Validated @RequestBody PmsBrandParam pmsBrandParam,
-                                                     BindingResult result){
+                                             BindingResult result){
         int i = 0;
-            i = pmsBrandService.updateBrandInfoById(id, pmsBrandParam);
-            if(i>0){
-                return  CommonResult.success(i);
-            }
-            return  CommonResult.failed("通过id修改品牌信息失败");
+        i = pmsBrandService.updateBrandInfoById(id, pmsBrandParam);
+        if(i>0){
+            return  CommonResult.success(i);
+        }
+        return  CommonResult.failed("通过id修改品牌信息失败");
     }
 
 
     @ApiOperation("新增品牌")
     @RequestMapping(value = "brand/insert",method = RequestMethod.POST)
     public CommonResult  insertBrand(@RequestBody PmsBrandParam pmsBrandParam,
-                                             BindingResult result){
+                                     BindingResult result){
         int i = 0;
         i = pmsBrandService.insertBrand( pmsBrandParam);
         if(i>0){
@@ -95,7 +95,7 @@ public class PmsBrandController {
     @ApiOperation("删除品牌")
     @RequestMapping(value = "brand/delete",method = RequestMethod.POST)
     public CommonResult  deleteBrand(@RequestParam  List<Long> ids
-                                     ){
+    ){
         int i = 0;
         i = pmsBrandService.deleteBrand( ids);
         if(i>0){

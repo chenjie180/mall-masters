@@ -19,7 +19,7 @@ public class PmsBrandParam {
     private String name;
     @Length(max = 8)
     private String firstLetter;
-@Min(value = 0,message = "排序最小值为0")
+    @Min(value = 0,message = "排序最小值为0")
     private Integer sort;
     @FlagValidator(value = {"0","1"}, message = "厂家状态不正确")
     private Integer factoryStatus;
