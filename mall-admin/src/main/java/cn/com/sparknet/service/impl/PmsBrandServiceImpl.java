@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -66,6 +67,9 @@ public class PmsBrandServiceImpl implements PmsBrandService {
         PmsBrand pmsBrand =new PmsBrand();
         BeanUtils.copyProperties(pmsBrandParam,pmsBrand);
         pmsBrand.setId(id);
+        if(StringUtils.isEmpty(pmsBrand.getFirstLetter())){
+        	pmsBrand.setFirstLetter(pmsBrand.getName());
+        }
         PmsBrandExample pmsBrandExample=new PmsBrandExample();
         pmsBrandExample.createCriteria().andIdEqualTo(id);
         int i = pmsBrandMapper.updateByExampleSelective(pmsBrand, pmsBrandExample);
@@ -76,6 +80,9 @@ public class PmsBrandServiceImpl implements PmsBrandService {
     public int insertBrand(PmsBrandParam pmsBrandParam) {
         PmsBrand pmsBrand =new PmsBrand();
         BeanUtils.copyProperties(pmsBrandParam,pmsBrand);
+        if(StringUtils.isEmpty(pmsBrand.getFirstLetter())){
+        	pmsBrand.setFirstLetter(pmsBrand.getName());
+        }
         int insert = pmsBrandMapper.insert(pmsBrand);
         return insert;
     }

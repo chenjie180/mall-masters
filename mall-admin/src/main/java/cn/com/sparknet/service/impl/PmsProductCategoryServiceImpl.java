@@ -1,5 +1,7 @@
 package cn.com.sparknet.service.impl;
 
+import cn.com.sparknet.dao.PmsProductCategoryDao;
+import cn.com.sparknet.dto.PmsProductCategoryChildren;
 import cn.com.sparknet.dto.PmsProductCategoryParam;
 import cn.com.sparknet.mapper.PmsProductCategoryAttributeRelationMapper;
 import cn.com.sparknet.model.PmsProductCategory;
@@ -26,7 +28,8 @@ public class PmsProductCategoryServiceImpl  implements PmsProductCategoryService
     private cn.com.sparknet.mapper.PmsProductCategoryMapper pmsProductCategoryMapper;
     @Autowired
     private PmsProductCategoryAttributeRelationMapper pmsProductCategoryAttributeRelationMapper;
-
+    @Autowired
+    private PmsProductCategoryDao pmsProductCategoryDao;
 
     @Override
     public List<PmsProductCategory> selectPmsProductCategoryByPage(long parentId,  int pageNum,int pageSize) {
@@ -134,4 +137,10 @@ public class PmsProductCategoryServiceImpl  implements PmsProductCategoryService
             insertProductCategoryAttributeRelation(pmsProductCategory.getId(),productAttributeId);
         }
     }
+
+	@Override
+	public List<PmsProductCategoryChildren> selectPmsProductCategoryAllChildren() {
+		List<PmsProductCategoryChildren> categoryChildren=pmsProductCategoryDao.selectPmsProductCategoryAllChildren();
+		return categoryChildren;
+	}
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.PmsProductAttributeCategoryItem;
 import cn.com.sparknet.dto.PmsProductAttributeParam;
 import cn.com.sparknet.model.PmsProductAttribute;
 import cn.com.sparknet.model.PmsProductAttributeCategory;
@@ -115,6 +116,19 @@ public class PmsProductAttributeController {
 				}else {
 					return CommonResult.failed("失败");
 				}
+	}
+	
+	
+	@ApiOperation("查询商品类型和商品参数")
+	@RequestMapping(value = "/PmsProductAttribute/withChildren",method = RequestMethod.POST)
+	public CommonResult selectPmsProductAttributeWithChildren() {
+		List<PmsProductAttributeCategoryItem> pmsProductAttributeCategoryItem = pmsProductAttributeService.selectPmsProductAttributeWithChildren();
+		if(!StringUtils.isEmpty(pmsProductAttributeCategoryItem)) {
+			return	CommonResult.success(pmsProductAttributeCategoryItem);
+			}else {
+				return CommonResult.failed("失败");
+			}
+		
 	}
 	
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sparknet.dao.PmsProductCategoryDao">
+  <resultMap id="PmsProductCategoryAllChildren" type="cn.com.sparknet.dto.PmsProductCategoryChildren" autoMapping="true">
+  <id property="id" column="id"/>
+  <id property="name" column="name"/>
+    <collection property="children"  javaType="List" ofType="cn.com.sparknet.model.PmsProductCategory">
+     <id property="id" column="child_id"/>
+  <id property="name" column="child_name"/>
+    </collection>
+    
+  </resultMap>
+  <select id="selectPmsProductCategoryAllChildren" resultMap="PmsProductCategoryAllChildren">
+          select c1.id,c1.name,c2.id child_id,c2.name child_name from Pms_product_cateGory c1 left 
+          join Pms_product_cateGory c2 
+          on c1.id=c2.parent_id where c1.parent_id=0
+  </select>
+
+</mapper>

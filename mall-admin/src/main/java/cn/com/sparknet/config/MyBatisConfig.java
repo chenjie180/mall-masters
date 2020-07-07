@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement // 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
-@MapperScan({"cn.com.sparknet.mapper"})
+@MapperScan({"cn.com.sparknet.mapper","cn.com.sparknet.dao"})
 public class MyBatisConfig {
 }

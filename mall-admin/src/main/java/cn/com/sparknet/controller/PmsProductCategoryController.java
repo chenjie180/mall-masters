@@ -2,6 +2,7 @@ package cn.com.sparknet.controller;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.PmsProductCategoryChildren;
 import cn.com.sparknet.dto.PmsProductCategoryParam;
 import cn.com.sparknet.model.PmsProductCategory;
 import cn.com.sparknet.service.PmsProductCategoryService;
@@ -123,5 +124,18 @@ public class PmsProductCategoryController {
             return   CommonResult.failed("修改失败");
         }
     }
+    
+    @ApiOperation(value = "查询所有的商品分类以children的形式")
+    @RequestMapping(value = "/pmsProductCategory/allWithChildren",method = RequestMethod.POST)
+    public CommonResult selectPmsProductCategoryAllChildren(){
+    	List<PmsProductCategoryChildren> selectPmsProductCategoryAllChildren = pmsProductCategoryService.selectPmsProductCategoryAllChildren();
+        if(StringUtils.isEmpty(selectPmsProductCategoryAllChildren)){
+            return   CommonResult.failed("查询失败");
+        }else{
+            return   CommonResult.success(selectPmsProductCategoryAllChildren);
+        }
+         
+    }
+
 
 }

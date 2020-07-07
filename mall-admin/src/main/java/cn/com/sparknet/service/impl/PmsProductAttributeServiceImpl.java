@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 
+import cn.com.sparknet.dao.PmsProductAttributeDao;
+import cn.com.sparknet.dto.PmsProductAttributeCategoryItem;
 import cn.com.sparknet.dto.PmsProductAttributeParam;
 import cn.com.sparknet.mapper.PmsProductAttributeCategoryMapper;
 import cn.com.sparknet.mapper.PmsProductAttributeMapper;
@@ -22,6 +24,8 @@ public class PmsProductAttributeServiceImpl implements PmsProductAttributeServic
 	private PmsProductAttributeMapper pmsProductAttributeMapper;
 	@Autowired
 	private PmsProductAttributeCategoryMapper pmsProductAttributeCategoryMapper;
+	@Autowired
+	private PmsProductAttributeDao pmsProductAttributeDao;
 	
 	
 	public int insertPmsProductAttribute(PmsProductAttributeParam pmsProductAttributeParam) {
@@ -76,6 +80,12 @@ public class PmsProductAttributeServiceImpl implements PmsProductAttributeServic
 		example.setOrderByClause(" id");
 		List<PmsProductAttributeCategory> selectByExample = pmsProductAttributeCategoryMapper.selectByExample(example);
 		return selectByExample;
+	}
+
+	@Override
+	public List<PmsProductAttributeCategoryItem> selectPmsProductAttributeWithChildren() {
+		List<PmsProductAttributeCategoryItem> selectPmsProductAttributeWithChildren = pmsProductAttributeDao.selectPmsProductAttributeWithChildren();
+		return selectPmsProductAttributeWithChildren;
 	}
 	
 }

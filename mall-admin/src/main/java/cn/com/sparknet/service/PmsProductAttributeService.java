@@ -2,6 +2,7 @@ package cn.com.sparknet.service;
 
 import java.util.List;
 
+import cn.com.sparknet.dto.PmsProductAttributeCategoryItem;
 import cn.com.sparknet.dto.PmsProductAttributeParam;
 import cn.com.sparknet.model.PmsProductAttribute;
 import cn.com.sparknet.model.PmsProductAttributeCategory;
@@ -21,5 +22,7 @@ public interface PmsProductAttributeService {
 	public int updatePmsProductAttributeById(Long id,PmsProductAttributeParam pmsProductAttributeParam);
 
 	public  List<PmsProductAttributeCategory>  selectPmsProductAttributeCategoryListAll();
+
+	public List<PmsProductAttributeCategoryItem> selectPmsProductAttributeWithChildren();
 	
 }

@@ -1,5 +1,6 @@
 package cn.com.sparknet.service;
 
+import cn.com.sparknet.dto.PmsProductCategoryChildren;
 import cn.com.sparknet.dto.PmsProductCategoryParam;
 import cn.com.sparknet.model.PmsProductCategory;
 
@@ -27,4 +28,7 @@ public interface PmsProductCategoryService {
   PmsProductCategory selectPmsProductCategoryInfoById(Long id);
 
   int updatePmsProductCategoryInfoById(Long id, PmsProductCategoryParam pmsProductCategoryParam);
+
+
+  public List<PmsProductCategoryChildren> selectPmsProductCategoryAllChildren();
 }
