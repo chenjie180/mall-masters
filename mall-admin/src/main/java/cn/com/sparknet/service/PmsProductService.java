@@ -17,4 +17,10 @@ public interface PmsProductService {
 	public int updateNewStatus(List<Long> ids, Integer newStatus);
 	
 	public int updateRecommandStatus(List<Long> ids, Integer recommandStatus);
+
+	public int deleteByProductIds(List<Long> ids,int deleteStatus);
+
+	public List<PmsProductParam> selectPmsProductByProductId(Long id) ;
+
+	public int updatePmsProductByProductId(Long productId, PmsProductParam queryParam);
 }

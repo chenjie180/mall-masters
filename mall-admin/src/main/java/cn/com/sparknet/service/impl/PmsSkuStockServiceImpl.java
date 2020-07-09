@@ -27,4 +27,16 @@ public class PmsSkuStockServiceImpl implements PmsSkuStockService {
 		return selectByExample;
 	}
 
+	@Override
+	public int updatePmsSkuStockByProductId(Long productId, List<PmsSkuStock> pmsSkuStockList) {
+		PmsSkuStockExample example=new PmsSkuStockExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andProductIdEqualTo(productId);
+		int updateByExampleSelective = 0;
+		for (PmsSkuStock pmsSkuStock : pmsSkuStockList) {
+			 updateByExampleSelective = pmsSkuStockMapper.updateByExampleSelective(pmsSkuStock, example);
+		}
+		return updateByExampleSelective;
+	}
+
 }

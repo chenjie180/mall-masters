@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
+import cn.com.sparknet.dao.PmsproductDao;
 import cn.com.sparknet.dto.PmsProductParam;
 import cn.com.sparknet.dto.PmsProductQueryParam;
 import cn.com.sparknet.mapper.CmsPrefrenceAreaProductRelationMapper;
@@ -21,15 +22,22 @@ import cn.com.sparknet.mapper.PmsProductLadderMapper;
 import cn.com.sparknet.mapper.PmsProductMapper;
 import cn.com.sparknet.mapper.PmsSkuStockMapper;
 import cn.com.sparknet.model.CmsPrefrenceAreaProductRelation;
+import cn.com.sparknet.model.CmsPrefrenceAreaProductRelationExample;
 import cn.com.sparknet.model.CmsSubjectProductRelation;
+import cn.com.sparknet.model.CmsSubjectProductRelationExample;
 import cn.com.sparknet.model.PmsMemberPrice;
+import cn.com.sparknet.model.PmsMemberPriceExample;
 import cn.com.sparknet.model.PmsProduct;
 import cn.com.sparknet.model.PmsProductAttributeValue;
+import cn.com.sparknet.model.PmsProductAttributeValueExample;
 import cn.com.sparknet.model.PmsProductExample;
 import cn.com.sparknet.model.PmsProductExample.Criteria;
 import cn.com.sparknet.model.PmsProductFullReduction;
+import cn.com.sparknet.model.PmsProductFullReductionExample;
 import cn.com.sparknet.model.PmsProductLadder;
+import cn.com.sparknet.model.PmsProductLadderExample;
 import cn.com.sparknet.model.PmsSkuStock;
+import cn.com.sparknet.model.PmsSkuStockExample;
 import cn.com.sparknet.service.PmsProductService;
 
 @Service
@@ -51,6 +59,9 @@ public class PmsProductServiceImpl  implements PmsProductService{
 	private CmsSubjectProductRelationMapper  cmsSubjectProductRelationMapper;
 	@Autowired
 	private CmsPrefrenceAreaProductRelationMapper  cmsPrefrenceAreaProductRelationMapper;
+	@Autowired
+	private PmsproductDao pmsproductDao;
+	
 	
 	
 	public int insertPmsProduct(PmsProductParam param) {
@@ -162,6 +173,101 @@ public class PmsProductServiceImpl  implements PmsProductService{
 		example.createCriteria().andIdIn(ids);
 		int updateByExample = pmsProductMapper.updateByExampleSelective(pmsProduct, example);
 		return  updateByExample;
+	}
+
+
+	@Override
+	public int deleteByProductIds(List<Long> ids,int deleteStatus) {
+		PmsProduct record=new PmsProduct();
+		record.setDeleteStatus(deleteStatus);
+			PmsProductExample example=new PmsProductExample();
+			example.createCriteria().andIdIn(ids);
+			int updateByExampleSelective = pmsProductMapper.updateByExampleSelective(record, example);
+			return updateByExampleSelective;
+	}
+
+
+	@Override
+	public List<PmsProductParam> selectPmsProductByProductId(Long id) {
+		List<PmsProductParam> selectPmsProductByProductId = pmsproductDao.selectPmsProductByProductId(id);
+		return  selectPmsProductByProductId;
+	}
+
+
+	@Override
+	public int updatePmsProductByProductId(Long productId, PmsProductParam param) {
+		PmsProduct pmsProduct=new PmsProduct();
+		BeanUtils.copyProperties(param, pmsProduct);
+		PmsProductExample example=new PmsProductExample();
+		example.createCriteria().andIdEqualTo(productId);
+		int updateByExampleSelective = pmsProductMapper.updateByExampleSelective(pmsProduct, example);
+		//商品会员价格表
+				List<PmsMemberPrice> pmsMemberPrices = param.getPmsMemberPriceList();
+				PmsMemberPriceExample memberPriceExample=new PmsMemberPriceExample();
+				memberPriceExample.createCriteria().andProductIdEqualTo(productId);
+				pmsMemberPriceMapper.deleteByExample(memberPriceExample);
+				for (PmsMemberPrice pmsMemberPrice : pmsMemberPrices) {
+					pmsMemberPrice.setProductId(pmsProduct.getId());
+					pmsMemberPriceMapper.insertSelective(pmsMemberPrice);
+				}
+				//商品满减表
+				List<PmsProductFullReduction> pmsProductFullReductionList = param.getPmsProductFullReductionList();
+				PmsProductFullReductionExample PmsProductFullReduction=new PmsProductFullReductionExample();
+				PmsProductFullReduction.createCriteria().andProductIdEqualTo(productId);
+				pmsProductFullReductionMapper.deleteByExample(PmsProductFullReduction);
+				for (PmsProductFullReduction pmsProductFullReduction : pmsProductFullReductionList) {
+					pmsProductFullReduction.setProductId(pmsProduct.getId());
+					pmsProductFullReductionMapper.insert(pmsProductFullReduction);
+				}
+				//商品阶梯价格表
+				List<PmsProductLadder> pmsProductLadderList = param.getPmsProductLadderList();
+				PmsProductLadderExample PmsProductLadderExample=new PmsProductLadderExample();
+				PmsProductLadderExample.createCriteria().andProductIdEqualTo(productId);
+				pmsProductLadderMapper.deleteByExample(PmsProductLadderExample);
+				for (PmsProductLadder pmsProductLadder : pmsProductLadderList) {
+					pmsProductLadder.setProductId(pmsProduct.getId());
+					pmsProductLadderMapper.insertSelective(pmsProductLadder);
+				}
+				//商品sku
+				List<PmsSkuStock> pmsSkuStockList = param.getPmsSkuStockList();
+				PmsSkuStockExample pmsSkuStockExample=new PmsSkuStockExample();
+				pmsSkuStockExample.createCriteria().andProductIdEqualTo(productId);
+				pmsSkuStockMapper.deleteByExample(pmsSkuStockExample);
+				for (PmsSkuStock pmsSkuStock : pmsSkuStockList) {
+					pmsSkuStock.setProductId(pmsProduct.getId());
+					pmsSkuStock.setSale(0);
+					pmsSkuStockMapper.insertSelective(pmsSkuStock);
+				}
+				//商品属性分类表
+				List<PmsProductAttributeValue> pmsProductAttributeValueList = param.getPmsProductAttributeValueList();
+				PmsProductAttributeValueExample pmsProductAttributeValueExample=new PmsProductAttributeValueExample();
+				pmsProductAttributeValueExample.createCriteria().andProductIdEqualTo(productId);
+				pmsProductAttributeValueMapper.deleteByExample(pmsProductAttributeValueExample);
+				for (PmsProductAttributeValue pmsProductAttributeValue : pmsProductAttributeValueList) {
+					pmsProductAttributeValue.setProductId(pmsProduct.getId());
+					pmsProductAttributeValueMapper.insertSelective(pmsProductAttributeValue);
+				}
+				//商品关联专题
+				List<CmsSubjectProductRelation> cmsSubjectProductRelationList = param.getCmsSubjectProductRelationList();
+				CmsSubjectProductRelationExample cmsSubjectProductRelationExample=new CmsSubjectProductRelationExample();
+				cmsSubjectProductRelationExample.createCriteria().andProductIdEqualTo(productId);
+				cmsSubjectProductRelationMapper.deleteByExample(cmsSubjectProductRelationExample);
+				for (CmsSubjectProductRelation cmsSubjectProductRelation : cmsSubjectProductRelationList) {
+					cmsSubjectProductRelation.setProductId(pmsProduct.getId());
+					cmsSubjectProductRelationMapper.insertSelective(cmsSubjectProductRelation);
+				}
+				//商品关联优选
+				List<CmsPrefrenceAreaProductRelation> cmsPrefrenceAreaProductRelationList = param.getCmsPrefrenceAreaProductRelationList();
+				CmsPrefrenceAreaProductRelationExample cmsPrefrenceAreaProductRelationExample=new CmsPrefrenceAreaProductRelationExample();
+				cmsPrefrenceAreaProductRelationExample.createCriteria().andProductIdEqualTo(productId);
+				cmsPrefrenceAreaProductRelationMapper.deleteByExample(cmsPrefrenceAreaProductRelationExample);
+				for (CmsPrefrenceAreaProductRelation cmsPrefrenceAreaProductRelation : cmsPrefrenceAreaProductRelationList) {
+					cmsPrefrenceAreaProductRelation.setProductId(pmsProduct.getId());
+					cmsPrefrenceAreaProductRelationMapper.insertSelective(cmsPrefrenceAreaProductRelation);
+				}
+				return 1;
+//		queryParam.get
+		
 	}
 	
 	

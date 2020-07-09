@@ -7,5 +7,7 @@ import cn.com.sparknet.model.PmsSkuStock;
 public interface PmsSkuStockService {
 
 	public List<PmsSkuStock> selectPmsSkuStockListbyProductId(Long productId,String skuCode);
+
+	public int updatePmsSkuStockByProductId(Long productId, List<PmsSkuStock> pmsSkuStockList);
 	
 }
