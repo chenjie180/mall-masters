@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sparknet.dao.PmsproductDao">
+  <resultMap id="PmsProductByProductId" type="cn.com.sparknet.dto.PmsProductParam" autoMapping="true" extends="cn.com.sparknet.mapper.PmsProductMapper.BaseResultMap">
+  
+    <collection  property="pmsMemberPriceList"  javaType="List" resultMap="cn.com.sparknet.mapper.PmsMemberPriceMapper.BaseResultMap" ></collection>
+     <collection  property="pmsProductFullReductionList"  javaType="List" resultMap="cn.com.sparknet.mapper.PmsProductFullReductionMapper.BaseResultMap" ></collection>
+    <collection  property="PmsProductLadderList"  javaType="List" resultMap="cn.com.sparknet.mapper.PmsProductLadderMapper.BaseResultMap" ></collection>
+    <collection  property="PmsSkuStockList"  javaType="List" resultMap="cn.com.sparknet.mapper.PmsSkuStockMapper.BaseResultMap" ></collection>
+        <collection  property="pmsProductAttributeValueList"  javaType="List" resultMap="cn.com.sparknet.mapper.PmsProductAttributeValueMapper.BaseResultMap" ></collection>
+            <collection  property="cmsSubjectProductRelationList"  javaType="List" resultMap="cn.com.sparknet.mapper.CmsSubjectProductRelationMapper.BaseResultMap" ></collection>
+                <collection  property="cmsPrefrenceAreaProductRelationList"  javaType="List" resultMap="cn.com.sparknet.mapper.CmsPrefrenceAreaProductRelationMapper.BaseResultMap" ></collection>
+    
+    
+    
+  </resultMap>
+  <select id="selectPmsProductByProductId" parameterType="Long" resultMap="PmsProductByProductId">
+select * from pms_product pp left join pms_member_price  pm on pp.id=pm.product_id 
+left join pms_product_full_reduction pf on pp.id=pf.product_id
+LEFT JOIN pms_product_ladder pl  ON pp.id=pf.product_id
+LEFT JOIN pms_Sku_Stock ps  ON pp.id=ps.product_id
+LEFT JOIN pms_product_attribute_value pv  ON pp.id=pv.product_id
+LEFT JOIN cms_subject_product_relation pr  ON pp.id=pr.product_id
+LEFT JOIN cms_prefrence_area_product_relation par  ON pp.id=par.product_id
+where pp.id=#{id}
+  </select>
+
+</mapper>

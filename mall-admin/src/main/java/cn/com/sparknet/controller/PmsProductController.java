@@ -6,6 +6,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -88,6 +89,40 @@ public class PmsProductController {
 	            return   CommonResult.failed("修改失败");
 	        }
 	        
+	}
+	
+	
+	@ApiOperation("商品删除")
+	@RequestMapping(value = "pmsProduct/deleteByProductIds",method = RequestMethod.POST)
+	public CommonResult<Object> deleteByProductIds( @RequestParam(value = "ids" ) List<Long> ids,
+			@RequestParam(value = "deleteStatus") int deleteStatus) {
+		 int updateNewStatus = pmsProductService.deleteByProductIds(ids, deleteStatus);
+		 if(updateNewStatus>0){
+	            return   CommonResult.success(updateNewStatus);
+	        }else{
+	            return   CommonResult.failed("修改失败");
+	        }
+	        
+	}
+	
+	@ApiOperation("通过id查询商品信息")
+	@RequestMapping(value = "pmsProduct/select/{productId}",method = RequestMethod.POST)
+	public CommonResult<Object> selectPmsProductByProductId( @PathVariable(value = "productId" ) Long productId
+			) {
+		List<PmsProductParam> selectPmsProductByProductId = pmsProductService.selectPmsProductByProductId(productId);
+	            return   CommonResult.success(selectPmsProductByProductId);
+	}
+	
+	@ApiOperation("通过id修改商品信息")
+	@RequestMapping(value = "pmsProduct/updateByProductId/{productId}",method = RequestMethod.POST)
+	public CommonResult<Object> updatePmsProductByProductId( @PathVariable(value = "productId" ) Long productId,
+			@RequestBody PmsProductParam queryParam) {
+		 int updatePmsProductByProductId = pmsProductService.updatePmsProductByProductId(productId,queryParam);
+		 if(updatePmsProductByProductId>0){
+	            return   CommonResult.success(updatePmsProductByProductId);
+	        }else{
+	            return   CommonResult.failed("修改失败");
+	        }
 	}
 	
 
