@@ -19,7 +19,7 @@ public class OmsOrderParam {
 	    private String receiverPhone;
 	    
 	    @ApiModelProperty(value = "提交时间")
-	    private Date createTime;
+	    private String createTime;
 	    
 	    @ApiModelProperty(value = "订单id")
 	    private Long id;
@@ -28,6 +28,7 @@ public class OmsOrderParam {
 
 	    @ApiModelProperty(value = "订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单")
 	    private Integer status;
-
-	   
+	    @ApiModelProperty(value = "订单类型：0->正常订单，1秒杀订单")
+	    private Integer orderType;
+	    	   
 }

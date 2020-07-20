@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.com.sparknet.dao.OmsOrderDao">
-  <resultMap id="PmsProductAttributeWithChildren" type="cn.com.sparknet.dto.PmsProductAttributeCategoryItem" autoMapping="true">
-  <id property="id" column="id"/>
-  <id property="name" column="name"/>
-    <collection property="pmsProductAttributeList"  javaType="List" ofType="cn.com.sparknet.model.PmsProductAttribute">
-     <id property="id" column="child_id"/>
-  <id property="name" column="child_name"/>
-    </collection>
-    
-  </resultMap>
-  <select id="selectOmsOrderListByPage" parameterType="cn.com.sparknet.model.OmsOrder" resultMap="PmsProductAttributeWithChildren">
+
+  <select id="selectOmsOrderListByPage" parameterType="cn.com.sparknet.dto.OmsOrderParam"  resultMap="cn.com.sparknet.mapper.OmsOrderMapper.BaseResultMap" >
         select id,order_sn,create_time,member_username,total_amount,
-pay_type,source_type,status from  oms_order where order_sn like #{}
-and (receiver_name like #{} or receiver_phone like ?) and create_time  
-and status=? and order_type=? and source_type=?
+pay_type,source_type,status from  oms_order where 1=1
+<if test="omsOrderParam.orderSn!=null and omsOrderParam.orderSn.trim()!=''" >
+ and order_sn = #{omsOrderParam.orderSn}
+</if>
+<if test="omsOrderParam.receiverName!=null and omsOrderParam.receiverName.trim()!=''" >
+ and (receiver_name like concat('%',#{omsOrderParam.receiverName},'%') or receiver_phone like concat('%',#{omsOrderParam.receiverName},'%'))
+</if>
+<if test="omsOrderParam.status!=null " >
+ and status=#{omsOrderParam.status}
+</if>
+<if test="omsOrderParam.sourceType!=null " >
+ and source_type = #{omsOrderParam.sourceType}
+</if>
+<if test="omsOrderParam.orderType!=null " >
+ and order_type= #{omsOrderParam.orderType}
+</if>
+<if test="omsOrderParam.createTime!=null " >
+and date_format(create_time,'%Y-%m-%d') =#{omsOrderParam.createTime}
+  <!--  <![CDATA[ and create_time >= date(#{omsOrderParam.createTime,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')]]>     -->
+</if>
+<!-- <if test="omsOrderParam.createTime!=null " >
+   <![CDATA[ and create_time <= date(#{omsOrderParam.createTime,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')+1]]>    
+</if> -->
   </select>
 
 </mapper>

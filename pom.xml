@@ -29,6 +29,7 @@
         <mybatis.version>3.4.6</mybatis.version>
         <swagger2.version>2.7.0</swagger2.version>
         <spring-data-commons.version>2.1.5.RELEASE</spring-data-commons.version>
+        <logstash-logback.version>4.8</logstash-logback.version>
     </properties>
 
     <dependencies>
@@ -95,6 +96,12 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons</artifactId>
                 <version>${spring-data-commons.version}</version>
+            </dependency>
+            <!--集成logstash-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback.version}</version>
             </dependency>
         </dependencies>
 

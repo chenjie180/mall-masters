@@ -39,5 +39,9 @@
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
     </dependency>
+    <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
 </dependencies>
 </project>
