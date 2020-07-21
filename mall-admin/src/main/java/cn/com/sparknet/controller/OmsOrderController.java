@@ -41,9 +41,39 @@ public class OmsOrderController {
 	@RequestMapping(value = "/omsOrder/close",method = RequestMethod.POST)
 	public CommonResult closeOmsOrderList(@RequestParam(value = "status") int status,
 			@RequestParam(value = "ids") List<Long> ids) {
-			
-		 omsOrderService.closeOmsOrderList(status, ids);
-		return	null;//CommonResult.success(selectOmsOrderListByPage);
+		 int closeOmsOrderList = omsOrderService.closeOmsOrderList(status, ids);
+		 if(closeOmsOrderList>0){
+	            return  CommonResult.success(closeOmsOrderList);
+	        }else{
+	            return  CommonResult.failed("关闭订单管理");
+	        }
+		
+	} 
+	
+	
+	@ApiOperation("删除订单管理")
+	@RequestMapping(value = "/omsOrder/delete",method = RequestMethod.POST)
+	public CommonResult deleteOmsOrderList(@RequestParam(value = "status") int status,
+			@RequestParam(value = "ids") List<Long> ids) {
+		 int closeOmsOrderList = omsOrderService.deleteOmsOrderList(status, ids);
+		 if(closeOmsOrderList>0){
+	            return  CommonResult.success(closeOmsOrderList);
+	        }else{
+	            return  CommonResult.failed("删除订单失败");
+	        }
+		
+	} 
+	
+	@ApiOperation("批量发货")
+	@RequestMapping(value = "/omsOrder/send",method = RequestMethod.POST)
+	public CommonResult sendOmsOrderList(@RequestParam(value = "status") int status,
+			@RequestParam(value = "ids") List<Long> ids) {
+		 int closeOmsOrderList = omsOrderService.sendOmsOrderList(status, ids);
+		 if(closeOmsOrderList>0){
+	            return  CommonResult.success(closeOmsOrderList);
+	        }else{
+	            return  CommonResult.failed("批量发货失败");
+	        }
 		
 	} 
 	

@@ -18,7 +18,7 @@ public class CmsPrefrenceAreaServiceImpl implements CmsPrefrenceAreaService{
 	
 	public List<CmsPrefrenceArea> selectCmsPrefrenceAreaList() {
 		CmsPrefrenceAreaExample example=new CmsPrefrenceAreaExample();
-		example.setOrderByClause(" sort ");
+		example.setOrderByClause("sort");
 		List<CmsPrefrenceArea> selectByExample = CmsPrefrenceAreaMapper.selectByExample(example);
 		return selectByExample;
 	}

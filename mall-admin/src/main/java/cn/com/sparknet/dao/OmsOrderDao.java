@@ -9,6 +9,6 @@ import cn.com.sparknet.model.OmsOrder;
 
 public interface OmsOrderDao {
 
-	public List<OmsOrder> selectOmsOrderListByPage(@Param("omsOrderParam") OmsOrderParam omsOrderParam) ;
+	public List<OmsOrder> selectOmsOrderListByPages(@Param("omsOrderParam") OmsOrderParam omsOrderParam) ;
 
 }
