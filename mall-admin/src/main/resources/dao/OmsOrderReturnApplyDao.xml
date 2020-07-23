@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sparknet.dao.OmsOrderReturnApplyDao">
+
+
+  <select id="selectOmsOrderReturnApplyByPage" parameterType="cn.com.sparknet.dto.OmsOrderReturnApplyParam"  resultMap="cn.com.sparknet.mapper.OmsOrderReturnApplyMapper.BaseResultMap"  >
+    select id,create_time,member_username,return_amount,status,handle_time from oms_order_return_apply oa 
+    
+   
+   
+  </select>
+
+
+</mapper>

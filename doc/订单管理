@@ -3,7 +3,7 @@
 批量删除订单，修改选择的订单ids，订单状态0的为1
 批量发货的时候，批量修改订单表，状态为2，然后新增 oms_order_operate_history，这个地方用到stream和批量新增
 查询订单具体信息，oms_order ，oms_order_item，oms_order_operate_history， ORDER BY oi.id ASC,oh.create_time DESC
-订单备注，修改订单的，修改时间，备注。并且新增 oms_order_operate_history，这个地方用到stream和批量新增（其中状态是前台传过来的）
+订单备注，修改订单的，修改时间，备注。并且新增 oms_order_operate_history （其中状态是前台传过来的）
 如果订单为代发货的话，可以修改收货人信息，发送站内信，取消订单，备注订单
 如果为订单关闭的话，具有删除订单和备注订单的权限
 如果为已发货的话，具有订单追踪，发送站内信，备注订单的权限

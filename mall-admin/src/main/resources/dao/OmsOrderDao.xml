@@ -29,4 +29,24 @@ and date_format(create_time,'%Y-%m-%d') =#{omsOrderParam.createTime}
 </if> -->
   </select>
 
+ <resultMap id="omsOrderInfoDetailMap" type="cn.com.sparknet.dto.OmsOrderDetail" extends="cn.com.sparknet.mapper.OmsOrderMapper.BaseResultMap">
+  
+    <collection property="omsOrderItemList"   resultMap="cn.com.sparknet.mapper.OmsOrderItemMapper.BaseResultMap" columnPrefix="item_"> </collection>
+    <collection property="omsOrderOperateHistoryList"   resultMap="cn.com.sparknet.mapper.OmsOrderOperateHistoryMapper.BaseResultMap" columnPrefix="history_"> </collection>
+  </resultMap>
+
+
+ <select id="selectOmsOrderInfo"  resultMap="omsOrderInfoDetailMap" >
+SELECT o.order_sn,o.id,o.member_username,o.pay_type,o.source_type,o.order_type,o.delivery_company,o.delivery_sn,o.auto_confirm_day,o.integration,o.growth,o.promotion_info,
+o.receiver_name,o.receiver_phone,o.receiver_post_code,o.receiver_province,o.receiver_city,o.receiver_region,o.receiver_detail_address,o.status,
+oi.product_id as item_product_id, oi.id as item_id,oi.product_pic as item_product_pic,oi.product_name as item_product_name,oi.product_brand as item_product_brand,
+oi.product_sn as item_product_sn,oi.product_price as item_product_price,oi.product_quantity as item_product_quantity,
+oi.product_attr as item_product_attr ,oh.id as history_id,oh.operate_man as history_operate_man,oh.create_time  as history_create_time,
+oh.order_status as history_order_status,oh.note   as history_note FROM oms_order o LEFT JOIN
+oms_order_item oi ON oi.order_id=o.id 
+ LEFT JOIN oms_order_operate_history oh  ON oh.order_id=o.id
+ WHERE o.id=#{id}  ORDER BY oi.id ASC,oh.create_time DESC
+  </select>
+
+
 </mapper>

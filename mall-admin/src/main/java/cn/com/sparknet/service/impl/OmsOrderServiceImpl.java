@@ -14,7 +14,9 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.OrderOrBuilder;
 
 import cn.com.sparknet.dao.OmsOrderDao;
 import cn.com.sparknet.dao.OmsOrderOperateHistoryDao;
+import cn.com.sparknet.dto.OmsOrderDetail;
 import cn.com.sparknet.dto.OmsOrderParam;
+import cn.com.sparknet.dto.OmsOrderReceiveParam;
 import cn.com.sparknet.mapper.OmsOrderMapper;
 import cn.com.sparknet.mapper.OmsOrderOperateHistoryMapper;
 import cn.com.sparknet.model.OmsOrder;
@@ -32,6 +34,8 @@ public class OmsOrderServiceImpl implements OmsOrderService{
 	private OmsOrderMapper omsOrderMapper;
 	@Autowired
 	private OmsOrderOperateHistoryDao omsOrderOperateHistoryDao;
+	@Autowired
+	private OmsOrderOperateHistoryMapper omsOrderOperateHistoryMapper;
 	
 	
 	public List<OmsOrder> selectOmsOrderListByPage(OmsOrderParam  omsOrderParam,int pageNum,int pageSize) {
@@ -92,6 +96,51 @@ public class OmsOrderServiceImpl implements OmsOrderService{
 		}).collect(Collectors.toList());
 		omsOrderOperateHistoryDao.insertBatch(historyList);
 		return  updateByExampleSelective;
+	}
+
+
+	@Override
+	public List<OmsOrderDetail> selectOmsOrderInfo(Long id) {
+		List<OmsOrderDetail> selectOmsOrderInfo = omsOrderDao.selectOmsOrderInfo(id);
+		return selectOmsOrderInfo;
+	}
+
+
+	@Override
+	public int updateOmsOrderNote(Long id, int status,String note) {
+		OmsOrderExample omsOrderExample=new OmsOrderExample();
+		omsOrderExample.createCriteria().andIdEqualTo(id);
+		OmsOrder omsOrder=new OmsOrder();
+		omsOrder.setNote(note);
+		omsOrder.setStatus(status);
+		int updateByExampleSelective = omsOrderMapper.updateByExampleSelective(omsOrder, omsOrderExample);
+		OmsOrderOperateHistory record=new OmsOrderOperateHistory();
+		record.setCreateTime(new Date());
+		record.setNote("修改备注信息:"+note);
+		record.setOperateMan("后台管理员");
+		record.setOrderStatus(status);
+		record.setOrderId(id);
+		omsOrderOperateHistoryMapper.insertSelective(record);
+		int i=1;
+		return i;
+	}
+
+
+	@Override
+	public int updatereceiverInfo(OmsOrderReceiveParam omsOrderReceiveParam) {
+		System.out.println("修改收货");
+		OmsOrder omsOrder=new OmsOrder();
+		BeanUtils.copyProperties(omsOrderReceiveParam, omsOrder);
+		int updateByPrimaryKeySelective = omsOrderMapper.updateByPrimaryKeySelective(omsOrder);
+		OmsOrderOperateHistory record=new OmsOrderOperateHistory();
+		record.setCreateTime(new Date());
+		record.setNote("修改收货人信息");
+		record.setOperateMan("后台管理员");
+		record.setOrderStatus(1);
+		record.setOrderId(omsOrder.getId());
+		omsOrderOperateHistoryMapper.insertSelective(record);
+		int i=1;
+		return i;
 	}
 	
 

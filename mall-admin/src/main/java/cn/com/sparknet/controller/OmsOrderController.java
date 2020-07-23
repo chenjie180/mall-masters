@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.OmsOrderDetail;
 import cn.com.sparknet.dto.OmsOrderParam;
+import cn.com.sparknet.dto.OmsOrderReceiveParam;
 import cn.com.sparknet.model.OmsOrder;
 import cn.com.sparknet.model.PmsProductAttributeCategory;
 import cn.com.sparknet.service.OmsOrderService;
@@ -77,6 +80,37 @@ public class OmsOrderController {
 		
 	} 
 	
+
+	@ApiOperation("查询订单详细信息")
+	@RequestMapping(value = "/omsOrder/selectInfo/{id}",method = RequestMethod.POST)
+	public CommonResult sendOmsOrderInfo(@PathVariable(value = "id") Long id
+			) {
+		  List<OmsOrderDetail> selectOmsOrderInfo = omsOrderService.selectOmsOrderInfo(id);
+	            return  CommonResult.success(selectOmsOrderInfo);
+		
+	} 
 	
+	@ApiOperation("修改订单备注")
+	@RequestMapping(value = "/omsOrder/updateNote/{id}",method = RequestMethod.POST)
+	public CommonResult updateOmsOrderNote(@PathVariable(value = "id") Long id,@RequestParam(value = "status") int status,@RequestParam(value = "note") String note) {
+		  int updateOmsOrderNote = omsOrderService.updateOmsOrderNote(id,status,note);
+		  if(updateOmsOrderNote>0){
+	            return  CommonResult.success(updateOmsOrderNote);
+	        }else{
+	            return  CommonResult.failed("修改订单备注失败");
+	        }
+	} 
+	
+	
+	 @ApiOperation("修改收货人信息")
+	    @RequestMapping(value = "/update/receiverInfo", method = RequestMethod.POST)
+	    public CommonResult updatereceiverInfo(@RequestBody OmsOrderReceiveParam omsOrderReceiveParam) {
+	        int count = omsOrderService.updatereceiverInfo(omsOrderReceiveParam);
+	        if (count > 0) {
+	            return CommonResult.success(count);
+	        }
+	        return CommonResult.failed();
+	    }
+	    
 
 }
