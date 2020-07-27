@@ -14,6 +14,7 @@ import com.mysql.cj.x.protobuf.MysqlxCrud.OrderOrBuilder;
 
 import cn.com.sparknet.dao.OmsOrderDao;
 import cn.com.sparknet.dao.OmsOrderOperateHistoryDao;
+import cn.com.sparknet.dto.OmsOrderDeliveryParam;
 import cn.com.sparknet.dto.OmsOrderDetail;
 import cn.com.sparknet.dto.OmsOrderParam;
 import cn.com.sparknet.dto.OmsOrderReceiveParam;
@@ -140,6 +141,25 @@ public class OmsOrderServiceImpl implements OmsOrderService{
 		record.setOrderId(omsOrder.getId());
 		omsOrderOperateHistoryMapper.insertSelective(record);
 		int i=1;
+		return i;
+	}
+
+
+	@Override
+	public int sendOmsOrdersList(int status, List<OmsOrderDeliveryParam> omsOrderDeliveryParamList) {
+		int i=omsOrderDao.delivery(omsOrderDeliveryParamList);
+		List<OmsOrderOperateHistory> historyList = omsOrderDeliveryParamList.stream().map(omsOrderDeliveryParam->{
+			OmsOrderOperateHistory omsOrderOperateHistory=new OmsOrderOperateHistory();
+			omsOrderOperateHistory.setOrderId(omsOrderDeliveryParam.getId());
+			omsOrderOperateHistory.setOperateMan("后台管理员");
+			omsOrderOperateHistory.setCreateTime(new Date());
+			omsOrderOperateHistory.setOrderStatus(status);
+			omsOrderOperateHistory.setNote("完成发货："+omsOrderDeliveryParam.getId());
+			return omsOrderOperateHistory;
+		}).collect(Collectors.toList());
+		  
+		  omsOrderOperateHistoryDao.insertBatch(historyList);;
+		 
 		return i;
 	}
 	

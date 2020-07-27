@@ -49,4 +49,36 @@ oms_order_item oi ON oi.order_id=o.id
   </select>
 
 
+<update id="delivery" >
+ UPDATE oms_order
+        SET
+        delivery_sn = CASE id
+        <foreach collection="list" item="item">
+            WHEN #{item.id} THEN #{item.deliverySn}
+        </foreach>
+        END,
+        delivery_sn = CASE id
+        <foreach collection="list" item="item">
+            WHEN #{item.id} THEN #{item.deliverySn}
+        </foreach>
+        END,
+        delivery_company = CASE id
+        <foreach collection="list" item="item">
+            WHEN #{item.id} THEN #{item.deliveryCompany}
+        </foreach>
+        END,
+        status = CASE id
+        <foreach collection="list" item="item">
+            WHEN #{item.id} THEN 2
+        </foreach>
+        END  
+        WHERE
+        id IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+        AND status = 1
+</update>
+
+
 </mapper>

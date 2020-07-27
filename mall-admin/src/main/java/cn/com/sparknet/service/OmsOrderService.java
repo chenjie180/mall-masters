@@ -2,6 +2,7 @@ package cn.com.sparknet.service;
 
 import java.util.List;
 
+import cn.com.sparknet.dto.OmsOrderDeliveryParam;
 import cn.com.sparknet.dto.OmsOrderDetail;
 import cn.com.sparknet.dto.OmsOrderParam;
 import cn.com.sparknet.dto.OmsOrderReceiveParam;
@@ -22,5 +23,7 @@ public interface OmsOrderService {
 	public int updateOmsOrderNote(Long id,int status,String note);
 
 	public int updatereceiverInfo(OmsOrderReceiveParam omsOrderReceiveParam);
+
+	public int sendOmsOrdersList(int status, List<OmsOrderDeliveryParam> omsOrderDeliveryParamList);
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.OmsOrderDeliveryParam;
 import cn.com.sparknet.dto.OmsOrderDetail;
 import cn.com.sparknet.dto.OmsOrderParam;
 import cn.com.sparknet.dto.OmsOrderReceiveParam;
@@ -79,6 +80,22 @@ public class OmsOrderController {
 	        }
 		
 	} 
+	
+	@ApiOperation("真批量发货")
+	@RequestMapping(value = "/omsOrder/sends",method = RequestMethod.POST)
+	public CommonResult sendOmsOrdersList(@RequestParam(value = "status") int status,@RequestBody List<OmsOrderDeliveryParam> omsOrderDeliveryParamList
+			) {
+		 int closeOmsOrderList = omsOrderService.sendOmsOrdersList(status, omsOrderDeliveryParamList);
+		 if(closeOmsOrderList>0){
+	            return  CommonResult.success(closeOmsOrderList);
+	        }else{
+	            return  CommonResult.failed("批量发货失败");
+	        }
+		
+	} 
+	
+	
+	
 	
 
 	@ApiOperation("查询订单详细信息")

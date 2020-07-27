@@ -4,8 +4,27 @@
 
 
   <select id="selectOmsOrderReturnApplyByPage" parameterType="cn.com.sparknet.dto.OmsOrderReturnApplyParam"  resultMap="cn.com.sparknet.mapper.OmsOrderReturnApplyMapper.BaseResultMap"  >
-    select id,create_time,member_username,return_amount,status,handle_time from oms_order_return_apply oa 
-    
+    select return_name,member_username,id,create_time,member_username,return_amount,status,handle_time,product_real_price from oms_order_return_apply oa 
+    <where>
+    <if test="omsOrderReturnApplyParam.id!=null" >
+    and  oa.id=#{omsOrderReturnApplyParam.id}
+    </if>
+    <if test="omsOrderReturnApplyParam.status!=null" >
+    and  oa.status=#{omsOrderReturnApplyParam.status}
+    </if>
+    <if test="omsOrderReturnApplyParam.createTime!=null and omsOrderReturnApplyParam.createTime.trim()!=''" >
+    and date_format(oa.create_time,'%Y-%m-%d') =#{omsOrderReturnApplyParam.createTime}
+    </if>
+    <if test="omsOrderReturnApplyParam.handleTime!=null and omsOrderReturnApplyParam.handleTime.trim()!=''" >
+    and date_format(oa.handle_time,'%Y-%m-%d') =#{omsOrderReturnApplyParam.handleTime}
+    </if>
+    <if test="omsOrderReturnApplyParam.handleMan!=null and omsOrderReturnApplyParam.handleMan.trim()!=''" >
+    and  oa.handle_man=#{omsOrderReturnApplyParam.handleMan}
+    </if>
+    <if test="omsOrderReturnApplyParam.returnName!=null and omsOrderReturnApplyParam.returnName.trim()!=''" >
+     and (oa.return_name like concat('%',#{omsOrderReturnApplyParam.returnName},'%') or oa.return_phone like concat('%',#{omsOrderReturnApplyParam.returnName},'%'))
+    </if>
+    </where>
    
    
   </select>
