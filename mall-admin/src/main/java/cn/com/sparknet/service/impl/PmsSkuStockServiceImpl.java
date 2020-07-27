@@ -1,15 +1,14 @@
 package cn.com.sparknet.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.com.sparknet.mapper.PmsSkuStockMapper;
 import cn.com.sparknet.model.PmsSkuStock;
 import cn.com.sparknet.model.PmsSkuStockExample;
 import cn.com.sparknet.model.PmsSkuStockExample.Criteria;
 import cn.com.sparknet.service.PmsSkuStockService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PmsSkuStockServiceImpl implements PmsSkuStockService {
@@ -37,6 +36,17 @@ public class PmsSkuStockServiceImpl implements PmsSkuStockService {
 			 updateByExampleSelective = pmsSkuStockMapper.updateByExampleSelective(pmsSkuStock, example);
 		}
 		return updateByExampleSelective;
+	}
+
+	@Override
+	public int updatePmsSkuStockListbyProductId(Long productId, List<PmsSkuStock> pmsSkuStockList) {
+		PmsSkuStockExample pmsSkuStockExample=new PmsSkuStockExample();
+		pmsSkuStockExample.createCriteria().andProductIdEqualTo(productId);
+		int i = 0;
+		for (PmsSkuStock pmsSkuStock: pmsSkuStockList){
+			i = pmsSkuStockMapper.updateByExampleSelective(pmsSkuStock, pmsSkuStockExample);
+		};
+		return i;
 	}
 
 }
