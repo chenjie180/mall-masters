@@ -1,5 +1,6 @@
 package cn.com.sparknet.service;
 
+import cn.com.sparknet.dto.SmsFlashPromotionSessionReturn;
 import cn.com.sparknet.model.SmsFlashPromotionSession;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface SmsFlashPromotionSessionService {
     public int deleteSmsFlashPromotionSession(long id);
 
     public SmsFlashPromotionSession selectSmsFlashPromotionSessionById(long id);
+
+	public List<SmsFlashPromotionSessionReturn> selectSmsFlashPromotionSessionCount(Long flashPromotionId);
 }

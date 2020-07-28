@@ -2,6 +2,7 @@ package cn.com.sparknet.controller;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.SmsFlashPromotionSessionReturn;
 import cn.com.sparknet.model.SmsFlashPromotionSession;
 import cn.com.sparknet.service.SmsFlashPromotionSessionService;
 import io.swagger.annotations.Api;
@@ -69,6 +70,14 @@ public class SmsFlashPromotionSessionController {
     public CommonResult selectSmsFlashPromotionSessionById(@PathVariable("id")  long id ){
         SmsFlashPromotionSession smsFlashPromotion   = smsFlashPromotionSessionService.selectSmsFlashPromotionSessionById(id);
         return  CommonResult.success(smsFlashPromotion);
+
+    }
+    
+    @ApiOperation("查询有效的秒杀时间段活动和商品数量")
+    @RequestMapping(value = "/SmsFlashPromotionSession/selectCount",method = RequestMethod.POST)
+    public CommonResult selectSmsFlashPromotionSessionCount(@RequestParam(value = "flashPromotionId") long flashPromotionId){
+       List<SmsFlashPromotionSessionReturn> selectSmsFlashPromotionSessionCount = smsFlashPromotionSessionService.selectSmsFlashPromotionSessionCount(flashPromotionId);
+        return  CommonResult.success(selectSmsFlashPromotionSessionCount);
 
     }
 
