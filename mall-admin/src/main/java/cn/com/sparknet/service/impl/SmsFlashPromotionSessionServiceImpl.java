@@ -1,5 +1,6 @@
 package cn.com.sparknet.service.impl;
 
+import cn.com.sparknet.dto.SmsFlashPromotionSessionDetail;
 import cn.com.sparknet.dto.SmsFlashPromotionSessionReturn;
 import cn.com.sparknet.mapper.SmsFlashPromotionSessionMapper;
 import cn.com.sparknet.model.SmsFlashPromotionSession;
@@ -66,17 +67,38 @@ public class SmsFlashPromotionSessionServiceImpl implements SmsFlashPromotionSes
 
 	@Override
 	public List<SmsFlashPromotionSessionReturn> selectSmsFlashPromotionSessionCount(Long flashPromotionId) {
+		List<SmsFlashPromotionSessionReturn> list=new ArrayList<>();
 		SmsFlashPromotionSessionExample example=new SmsFlashPromotionSessionExample();
 		example.createCriteria().andStatusEqualTo(1);
 		List<SmsFlashPromotionSession> selectByExample = smsFlashPromotionSessionMapper.selectByExample(example);
-		List<SmsFlashPromotionSessionReturn> list=new ArrayList<>();
+		System.out.println(selectByExample);
 		for (SmsFlashPromotionSession smsFlashPromotionSession : selectByExample) {
 			SmsFlashPromotionSessionReturn flashPromotionSessionReturn=new SmsFlashPromotionSessionReturn();
 			BeanUtils.copyProperties(smsFlashPromotionSession, flashPromotionSessionReturn);
 			long selectCountById = smsFlashPromotionProductRelationService.selectCountById(flashPromotionId, smsFlashPromotionSession.getId());
-			flashPromotionSessionReturn.setCount(flashPromotionId);
+			flashPromotionSessionReturn.setProductCount(selectCountById);
 			list.add(flashPromotionSessionReturn);
 		}
 		return list;
+		
+		
 	}
+	
+	@Override
+    public List<SmsFlashPromotionSessionDetail> selectList(Long flashPromotionId) {
+        List<SmsFlashPromotionSessionDetail> result = new ArrayList<>();
+        SmsFlashPromotionSessionExample example = new SmsFlashPromotionSessionExample();
+        example.createCriteria().andStatusEqualTo(1);
+        List<SmsFlashPromotionSession> list = smsFlashPromotionSessionMapper.selectByExample(example);
+        System.out.println(list);
+        for (SmsFlashPromotionSession promotionSession : list) {
+            SmsFlashPromotionSessionDetail detail = new SmsFlashPromotionSessionDetail();
+            BeanUtils.copyProperties(promotionSession, detail);
+            long count = smsFlashPromotionProductRelationService.getCount(flashPromotionId, promotionSession.getId());
+            detail.setProductCount(count);
+            result.add(detail);
+        }
+        return result;
+    }
+	
 }

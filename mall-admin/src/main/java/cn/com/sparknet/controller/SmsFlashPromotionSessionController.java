@@ -2,6 +2,7 @@ package cn.com.sparknet.controller;
 
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
+import cn.com.sparknet.dto.SmsFlashPromotionSessionDetail;
 import cn.com.sparknet.dto.SmsFlashPromotionSessionReturn;
 import cn.com.sparknet.model.SmsFlashPromotionSession;
 import cn.com.sparknet.service.SmsFlashPromotionSessionService;
@@ -79,6 +80,13 @@ public class SmsFlashPromotionSessionController {
        List<SmsFlashPromotionSessionReturn> selectSmsFlashPromotionSessionCount = smsFlashPromotionSessionService.selectSmsFlashPromotionSessionCount(flashPromotionId);
         return  CommonResult.success(selectSmsFlashPromotionSessionCount);
 
+    }
+    
+    @ApiOperation("获取全部可选场次及其数量")
+    @RequestMapping(value = "/selectList", method = RequestMethod.GET)
+    public CommonResult<List<SmsFlashPromotionSessionDetail>> selectList(Long flashPromotionId) {
+        List<SmsFlashPromotionSessionDetail> promotionSessionList = smsFlashPromotionSessionService.selectList(flashPromotionId);
+        return CommonResult.success(promotionSessionList);
     }
 
 }

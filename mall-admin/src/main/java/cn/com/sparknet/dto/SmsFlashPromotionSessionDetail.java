@@ -2,14 +2,16 @@ package cn.com.sparknet.dto;
 
 import cn.com.sparknet.model.SmsFlashPromotionSession;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-public class SmsFlashPromotionSessionReturn extends SmsFlashPromotionSession{
+
+/**
+ * 包含商品数量的场次信息
+ * Created by macro on 2018/11/19.
+ */
+public class SmsFlashPromotionSessionDetail extends SmsFlashPromotionSession {
     @Setter
     @Getter
     @ApiModelProperty("商品数量")
     private Long productCount;
-
 }
