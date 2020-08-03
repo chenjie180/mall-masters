@@ -53,6 +53,18 @@ public class PmsProductController {
 	}
 	
 	
+	@ApiOperation("通过关键字查询所有的商品")
+	@RequestMapping(value = "pmsProduct/selectByKeys",method = RequestMethod.POST)
+	public CommonResult<Object> selectPmsProductByKeys(
+			@RequestParam(value = "keys" ) String keys) {
+		List<PmsProduct> selectPmsProductByPage = pmsProductService.selectPmsProductByKeys(keys);
+		 
+	            return   CommonResult.success(selectPmsProductByPage);
+	        
+	}
+	
+	
+	
 	@ApiOperation("修改商品上架状态")
 	@RequestMapping(value = "pmsProduct/updatePublishStatus",method = RequestMethod.POST)
 	public CommonResult<Object> updatePublishStatus( @RequestParam(value = "ids" ) List<Long> ids,

@@ -10,6 +10,7 @@ import com.github.pagehelper.PageHelper;
 import cn.com.sparknet.dao.SmsFlashPromotionProductRelationDao;
 import cn.com.sparknet.dto.SmsFlashPromotionProductRelationReturn;
 import cn.com.sparknet.mapper.SmsFlashPromotionProductRelationMapper;
+import cn.com.sparknet.model.SmsFlashPromotionProductRelation;
 import cn.com.sparknet.model.SmsFlashPromotionProductRelationExample;
 import cn.com.sparknet.service.SmsFlashPromotionProductRelationService;
 
@@ -48,6 +49,28 @@ public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashProm
 		List<SmsFlashPromotionProductRelationReturn> selectSmsFlashPromotionProductRelationByPage = smsFlashPromotionProductRelationDao.selectSmsFlashPromotionProductRelationByPage(promotionId,promotionSessionId);
 		return selectSmsFlashPromotionProductRelationByPage;
 		
+	}
+
+	@Override
+	public int insertSmsFlashPromotionProductRelationbatch(
+			List<SmsFlashPromotionProductRelation> smsFlashPromotionProductRelationList) {
+		int i=smsFlashPromotionProductRelationDao.insertSmsFlashPromotionProductRelationbatch(smsFlashPromotionProductRelationList);
+		return i;
+	}
+
+	@Override
+	public int updateSmsFlashPromotionProductRelation(
+			SmsFlashPromotionProductRelation smsFlashPromotionProductRelation) {
+		SmsFlashPromotionProductRelationExample example=new SmsFlashPromotionProductRelationExample();
+		example.createCriteria().andIdEqualTo(smsFlashPromotionProductRelation.getId());
+		int updateByExampleSelective = flashPromotionProductRelationMapper.updateByExampleSelective(smsFlashPromotionProductRelation, example);
+		return updateByExampleSelective;
+	}
+
+	@Override
+	public int deleteSmsFlashPromotionProductRelation(Long id) {
+		int deleteByPrimaryKey = flashPromotionProductRelationMapper.deleteByPrimaryKey(id);
+		return deleteByPrimaryKey;
 	}
 
 }

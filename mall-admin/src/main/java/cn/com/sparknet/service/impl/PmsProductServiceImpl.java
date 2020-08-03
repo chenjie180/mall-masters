@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -268,6 +269,21 @@ public class PmsProductServiceImpl  implements PmsProductService{
 				return 1;
 //		queryParam.get
 		
+	}
+
+
+	@Override
+	public List<PmsProduct> selectPmsProductByKeys(String keys) {
+		PmsProductExample example=new PmsProductExample();
+		Criteria createCriteria = example.createCriteria();
+		if(!StringUtils.isEmpty(keys)) {
+			createCriteria.andNameLike("%"+keys+"%");
+			Criteria createCriteria2 = example.createCriteria();
+			createCriteria2.andProductSnLike("%" + keys + "%");
+			example.or(createCriteria2);
+		}
+		
+		return pmsProductMapper.selectByExample(example);
 	}
 	
 	

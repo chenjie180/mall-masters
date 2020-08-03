@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageHelper;
 
 import cn.com.sparknet.dto.SmsFlashPromotionProductRelationReturn;
+import cn.com.sparknet.model.SmsFlashPromotionProductRelation;
 
 public interface SmsFlashPromotionProductRelationService {
 
@@ -19,5 +20,11 @@ public interface SmsFlashPromotionProductRelationService {
     
 	public  List<SmsFlashPromotionProductRelationReturn> selectSmsFlashPromotionProductRelationByPage(Integer pageNum, Integer pageSize, Long promotionId,
 			Long promotionSessionId);
+	
+	public int insertSmsFlashPromotionProductRelationbatch(
+			List<SmsFlashPromotionProductRelation> smsFlashPromotionProductRelationList);
+	public int updateSmsFlashPromotionProductRelation(
+			SmsFlashPromotionProductRelation smsFlashPromotionProductRelation);
+	public int deleteSmsFlashPromotionProductRelation(Long id);
 	
 }

@@ -10,4 +10,13 @@
   sd.flash_promotion_id = #{promotionId} and sd.flash_promotion_session_id = #{promotionSessionId}
   </select>
 
+
+
+
+  <insert id="insertSmsFlashPromotionProductRelationbatch" parameterType="java.util.List">
+INSERT INTO sms_flash_promotion_product_relation (flash_promotion_id,flash_promotion_session_id,product_id)values
+<foreach collection ="list" item="item" index= "index" separator =",">
+(#{item.flashPromotionId},#{item.flashPromotionSessionId},#{item.productId})
+</foreach >
+</insert>
 </mapper>

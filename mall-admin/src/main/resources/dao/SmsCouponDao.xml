@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sparknet.dao.SmsCouponDao">
+  <resultMap id="smsCouponInfoById" type="cn.com.sparknet.dto.SmsCouponParam" extends="cn.com.sparknet.mapper.SmsCouponMapper.BaseResultMap" >
+    <collection property="couponProductRelationList" columnPrefix="sp_" resultMap="cn.com.sparknet.mapper.SmsCouponProductRelationMapper.BaseResultMap"></collection>
+    <collection property="smsCouponProductCategoryRelationList" columnPrefix="sr_" resultMap="cn.com.sparknet.mapper.SmsCouponProductCategoryRelationMapper.BaseResultMap"></collection>
+  </resultMap>
+  <select id="selectSmsCouponInfoById" resultMap="smsCouponInfoById">
+          select sc.*,sr.id sr_id,sr.coupon_id sr_coupon_id,sr.product_category_id sr_product_category_id,sr.product_category_name sr_product_category_name,
+         sr.parent_category_name sr_parent_category_name,sp.id sp_id,sp.coupon_id sp_coupon_id,sp.product_id sp_product_id,sp.product_name sp_product_name,
+         sp.product_sn sp_product_sn from sms_coupon sc  left join sms_coupon_product_category_relation sr
+         ON sr.coupon_id=sc.id left join sms_coupon_product_relation sp
+          on sp.coupon_id=sc.id where   sc.id=#{id}
+  </select>
+
+</mapper>

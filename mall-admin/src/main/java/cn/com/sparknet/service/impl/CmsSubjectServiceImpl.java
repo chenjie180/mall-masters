@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import com.github.pagehelper.PageHelper;
 
 import cn.com.sparknet.mapper.CmsSubjectMapper;
 import cn.com.sparknet.model.CmsSubject;
@@ -22,6 +25,18 @@ public class CmsSubjectServiceImpl  implements CmsSubjectService{
 		example.createCriteria().andCategoryIdEqualTo(categorgId);
 		List<CmsSubject> selectByExample = cmsSubjectMapper.selectByExample(example);
 		return selectByExample;
+	}
+
+	@Override
+	public List<CmsSubject> selectCmsSubjectByPage(int pageNum,int pageSize,String name) {
+		PageHelper.startPage(pageNum, pageSize);
+		CmsSubjectExample example=new CmsSubjectExample();
+		example.setOrderByClause(" create_time desc");
+		if(!StringUtils.isEmpty(name)) {
+			example.createCriteria().andTitleLike("%"+name+"%");
+		}
+		List<CmsSubject> selectByExample = cmsSubjectMapper.selectByExample(example);
+		return null;
 	}
 
 }

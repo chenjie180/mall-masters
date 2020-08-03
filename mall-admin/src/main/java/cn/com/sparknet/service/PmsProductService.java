@@ -23,4 +23,6 @@ public interface PmsProductService {
 	public List<PmsProductParam> selectPmsProductByProductId(Long id) ;
 
 	public int updatePmsProductByProductId(Long productId, PmsProductParam queryParam);
+
+	public List<PmsProduct> selectPmsProductByKeys(String keys);
 }
