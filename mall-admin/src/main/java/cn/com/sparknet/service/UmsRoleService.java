@@ -1,5 +1,7 @@
 package cn.com.sparknet.service;
 
+import java.util.List;
+
 import cn.com.sparknet.model.UmsRole;
 
 /**
@@ -8,4 +10,6 @@ import cn.com.sparknet.model.UmsRole;
  */
 public interface UmsRoleService {
     public int insertUmsRoleInfo(UmsRole umsRole);
+
+	public List<UmsRole> selectUmsRoleByPage(Integer pageNum, Integer pageSize, String name);
 }
