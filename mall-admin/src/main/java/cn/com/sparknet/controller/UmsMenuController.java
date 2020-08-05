@@ -99,5 +99,13 @@ public class UmsMenuController {
 	        List<UmsMenuNode> selectTreeNodeUmsMenu = umsMenuService.selectTreeNodeUmsMenu( );
 	        return  CommonResult.success(selectTreeNodeUmsMenu);
 	    }
+	 
+	 @ApiOperation("查询角色绑定拉的菜单")
+	    @RequestMapping(value = "/UmsMenu/selectBingTreeNode",method = RequestMethod.GET)
+	    public CommonResult selectBingTreeNode(Long roleId
+	    ){
+	        List<UmsMenuNode> selectTreeNodeUmsMenu = umsMenuService.selectBingTreeNode( roleId );
+	        return  CommonResult.success(selectTreeNodeUmsMenu);
+	    }
 	
 }

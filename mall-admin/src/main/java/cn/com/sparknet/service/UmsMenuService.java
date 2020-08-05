@@ -21,4 +21,6 @@ public interface UmsMenuService {
 
 	public List<UmsMenuNode> selectTreeNodeUmsMenu();
 
+	public List<UmsMenuNode> selectBingTreeNode(Long roleId);
+
 }

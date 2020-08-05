@@ -13,4 +13,6 @@ public class UmsMenuNode extends UmsMenu {
 	@ApiModelProperty("孩子节点")
 	private List<UmsMenuNode> children;
 	
+	@ApiModelProperty("绑定数量")
+	private Integer counts;
 }

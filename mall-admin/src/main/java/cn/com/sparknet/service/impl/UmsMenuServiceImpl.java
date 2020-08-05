@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.PageHelper;
 
+import cn.com.sparknet.dao.UmsMenuDao;
 import cn.com.sparknet.dto.UmsMenuNode;
 import cn.com.sparknet.mapper.UmsMenuMapper;
 import cn.com.sparknet.model.UmsAdmin;
@@ -22,6 +23,9 @@ import cn.com.sparknet.service.UmsMenuService;
 public class UmsMenuServiceImpl implements UmsMenuService {
     @Autowired
     private UmsMenuMapper umsMenuMapper;
+    @Autowired
+    private UmsMenuDao umsMenuDao;
+    
 	@Override
 	public int insertUmsMenuInfo(UmsMenu umsMenu) {
 		Long parentId = umsMenu.getParentId();
@@ -104,8 +108,18 @@ public class UmsMenuServiceImpl implements UmsMenuService {
 		UmsMenuExample example=new UmsMenuExample();
 		List<UmsMenu> selectByExample = umsMenuMapper.selectByExample(example);
 		List<UmsMenuNode> UmsMenuNodeList=new ArrayList<>();
-		BeanUtils.copyProperties(selectByExample, UmsMenuNodeList);
+		for (UmsMenu umsMenu : selectByExample) {
+			UmsMenuNode menuNode=new UmsMenuNode();
+			BeanUtils.copyProperties(umsMenu, menuNode);
+			UmsMenuNodeList.add(menuNode);
+		}
 		List<UmsMenuNode> tree = toTree(UmsMenuNodeList);
+		return tree;
+	}
+	@Override
+	public List<UmsMenuNode> selectBingTreeNode(Long roleId) {
+		List<UmsMenuNode> list=umsMenuDao.selectBingTreeNode(roleId);
+		List<UmsMenuNode> tree = toTree(list);
 		return tree;
 	}
 

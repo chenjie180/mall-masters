@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.sparknet.dao.UmsMenuDao">
+
+
+  <select id="selectBingTreeNode"  resultMap="bingTreeNode"  >
+   SELECT um.*,(SELECT COUNT(*) FROM ums_role_menu_relation ur WHERE um.id=ur.menu_id AND ur.role_id=#{roleId} ) AS counts FROM ums_menu um WHERE hidden=0
+  </select>
+<resultMap id="bingTreeNode" type="cn.com.sparknet.dto.UmsMenuNode" extends="cn.com.sparknet.mapper.UmsMenuMapper.BaseResultMap" >
+  <id property="counts" column="counts"/>
+  </resultMap>
+  
+  
+  </mapper>
