@@ -49,6 +49,17 @@ public class UmsResourceController {
         List<UmsResource> smsFlashPromotionSession = resourceService.selectUmsResourceByPage(pageNum, pageSize,name,url,categoryId);
         return  CommonResult.success(CommonPage.restPage(smsFlashPromotionSession));
     }
+    
+    @ApiOperation("查询资源列表")
+    @RequestMapping(value = "/UmsResource/selectAll",method = RequestMethod.POST)
+    public CommonResult selectUmsResourceselectAll(
+                                                            @RequestParam(value = "name" ) String name,
+                                                            @RequestParam(value = "url" ) String url,
+                                                            @RequestParam(value = "categoryId" ) Long categoryId
+    ){
+        List<UmsResource> smsFlashPromotionSession = resourceService.selectUmsResourceselectAll(name,url,categoryId);
+        return  CommonResult.success(CommonPage.restPage(smsFlashPromotionSession));
+    }
 	
     @ApiOperation("删除资源")
     @RequestMapping(value = "/UmsResource/deleteById",method = RequestMethod.POST)

@@ -63,6 +63,22 @@ public int updateUmsResourceById(UmsResource umsResource) {
 	return updateByPrimaryKeySelective;
 }
 
+@Override
+public List<UmsResource> selectUmsResourceselectAll(String name, String url, Long categoryId) {
+	 UmsResourceExample umsAdminExample=new UmsResourceExample();
+     if(!StringUtils.isEmpty(name)){
+         umsAdminExample.createCriteria().andNameLike("%"+name+"%");
+     }
+     if(!StringUtils.isEmpty(url)){
+         umsAdminExample.createCriteria().andUrlLike("%"+url+"%");
+     }
+     if(!StringUtils.isEmpty(url)){
+         umsAdminExample.createCriteria().andCategoryIdEqualTo(categoryId);
+     }
+     List<UmsResource> umsAdmins = UmsResourceMapper.selectByExample(umsAdminExample);
+     return umsAdmins;
+}
+
 
 
 	

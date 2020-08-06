@@ -11,4 +11,20 @@
   </resultMap>
   
   
+  <select id="selectMenuById"  resultMap="MenuById"  >
+   select ur.* from ums_role_resource_relation up  left join ums_resource ur on ur.id=up.resource_id where up.role_id=#{roleId}  order by ur.id
+  </select>
+<resultMap id="MenuById" type="cn.com.sparknet.model.UmsMenu" extends="cn.com.sparknet.mapper.UmsMenuMapper.BaseResultMap" >
+  </resultMap>
+  
+  
+  
+  
+  <insert id="insertRoleIdBingMenuBatch" >
+INSERT INTO ums_role_menu_relation(role_id,menu_id) values
+<foreach collection ="menuIds" item="menuId" index= "index" separator =",">
+(#{roleId},#{"menuId"})
+</foreach >
+</insert>
+  
   </mapper>

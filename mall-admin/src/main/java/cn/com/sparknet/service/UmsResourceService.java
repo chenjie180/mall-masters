@@ -17,4 +17,6 @@ public interface UmsResourceService {
 
 	public int updateUmsResourceById(UmsResource umsResource);
 
+	public List<UmsResource> selectUmsResourceselectAll(String name, String url, Long categoryId);
+
 }
