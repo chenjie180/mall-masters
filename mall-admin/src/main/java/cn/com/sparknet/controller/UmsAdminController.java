@@ -3,13 +3,17 @@ package cn.com.sparknet.controller;
 import cn.com.sparknet.common.api.CommonPage;
 import cn.com.sparknet.common.api.CommonResult;
 import cn.com.sparknet.model.UmsAdmin;
+import cn.com.sparknet.model.UmsRole;
 import cn.com.sparknet.service.UmsAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shkstart
@@ -18,7 +22,10 @@ import java.util.List;
 @RestController
 @Api(tags = "UmsAdminController",description = "用户管理")
 public class UmsAdminController {
-
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
     @Autowired
     private UmsAdminService umsAdminService;
 
@@ -81,6 +88,38 @@ public class UmsAdminController {
         int i = umsAdminService.updateUmsAdminById( umsAdmin);
         return  CommonResult.success(umsAdmin);
     }
+
+    @ApiOperation("通过用户id查询对应角色信息")
+    @RequestMapping(value = "/UmsAdmin/select/{adminId}",method = RequestMethod.GET)
+    public CommonResult selectRoleByUmsAdminId(@PathVariable("adminId") Long adminId
+    ){
+        List<UmsRole> umsRoleList= umsAdminService.selectRoleByUmsAdminId( adminId);
+        return  CommonResult.success(umsRoleList);
+    }
+
+    @ApiOperation("修改用户对应的角色")
+    @RequestMapping(value = "/UmsAdmin/updateRole/{adminId}",method = RequestMethod.GET)
+    public CommonResult updateUmsAdminWithRoleId(@PathVariable("adminId") Long adminId,
+                                                 @RequestParam("roleIds") List<Long> roleIds
+    ){
+        int i= umsAdminService.updateUmsAdminWithRoleId( adminId,roleIds);
+        return  CommonResult.success(i);
+    }
+
+    @ApiOperation("用户登录")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public CommonResult login(@RequestParam("username") String username,@RequestParam("password") String password)
+    {
+        String token = umsAdminService.login(username, password);
+        if (token == null) {
+            return CommonResult.validateFailed("用户名或密码错误");
+        }
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return CommonResult.success(tokenMap);
+    }
+
 
 
 }

@@ -7,6 +7,7 @@
         <module>mall-admin</module>
         <module>mall-mbg</module>
         <module>mall-commom</module>
+        <module>mall-security</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -91,11 +92,11 @@
                 <version>${swagger2.version}</version>
             </dependency>
             <!--SpringData工具包-->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-commons</artifactId>
-                <version>${spring-data-commons.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.data</groupId>-->
+<!--                <artifactId>spring-data-commons</artifactId>-->
+<!--                <version>${spring-data-commons.version}</version>-->
+<!--            </dependency>-->
             <!--集成logstash-->
             <dependency>
                 <groupId>net.logstash.logback</groupId>

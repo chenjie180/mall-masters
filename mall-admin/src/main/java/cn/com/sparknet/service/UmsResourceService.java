@@ -1,8 +1,8 @@
 package cn.com.sparknet.service;
 
-import java.util.List;
-
 import cn.com.sparknet.model.UmsResource;
+
+import java.util.List;
 
 public interface UmsResourceService {
 
@@ -19,4 +19,5 @@ public interface UmsResourceService {
 
 	public List<UmsResource> selectUmsResourceselectAll(String name, String url, Long categoryId);
 
+	public List<UmsResource> listAll();
 }

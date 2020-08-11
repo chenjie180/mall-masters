@@ -1,0 +1,5 @@
+通过账号密码进行登录，进入后台先通过username，查询用户信息
+取出用户id,通过用户id查询缓存中用户对应的资源，有直接返回
+如果没有的话，查询库中数据，并把这部分的数据缓存到redis，return new AdminUserDetails(admin,resourceList);
+判断密码是否一致，如果不一致的话，返回，一致的话，
+

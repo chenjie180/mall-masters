@@ -1,20 +1,16 @@
 package cn.com.sparknet.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
+import cn.com.sparknet.mapper.UmsResourceMapper;
+import cn.com.sparknet.model.UmsResource;
+import cn.com.sparknet.model.UmsResourceExample;
+import cn.com.sparknet.service.UmsResourceService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.github.pagehelper.PageHelper;
-
-import cn.com.sparknet.mapper.UmsResourceMapper;
-import cn.com.sparknet.model.UmsAdmin;
-import cn.com.sparknet.model.UmsAdminExample;
-import cn.com.sparknet.model.UmsResource;
-import cn.com.sparknet.model.UmsResourceExample;
-import cn.com.sparknet.service.UmsResourceService;
+import java.util.Date;
+import java.util.List;
 @Service
 public class UmsResourceServiceImpl implements UmsResourceService {
 @Autowired
@@ -79,7 +75,10 @@ public List<UmsResource> selectUmsResourceselectAll(String name, String url, Lon
      return umsAdmins;
 }
 
+    @Override
+    public List<UmsResource> listAll() {
+        return UmsResourceMapper.selectByExample(new UmsResourceExample());
+    }
 
 
-	
 }

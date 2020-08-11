@@ -8,6 +8,12 @@
   </select>
 <resultMap id="ResourceById" type="cn.com.sparknet.model.UmsResource" extends="cn.com.sparknet.mapper.UmsRoleMapper.BaseResultMap" >
   </resultMap>
-  
-  
+
+
+    <select id="selectRoleByUmsAdminId"  resultMap="RoleByUmsAdminId">
+   SELECT ur.* FROM ums_admin_role_relation ua left JOIN ums_role ur    on ur.id=ua.role_id where ua.admin_id=#{adminId} ORDER BY ur.sort desc
+
+  </select>
+    <resultMap id="RoleByUmsAdminId" type="cn.com.sparknet.model.UmsRole" extends="cn.com.sparknet.mapper.UmsRoleMapper.BaseResultMap" >
+    </resultMap>
   </mapper>

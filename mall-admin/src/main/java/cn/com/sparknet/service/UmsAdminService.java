@@ -1,6 +1,9 @@
 package cn.com.sparknet.service;
 
 import cn.com.sparknet.model.UmsAdmin;
+import cn.com.sparknet.model.UmsResource;
+import cn.com.sparknet.model.UmsRole;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -20,4 +23,13 @@ public interface UmsAdminService {
     public UmsAdmin selectUmsAdminById(Long id);
 
     public int updateUmsAdminById(UmsAdmin umsAdmin);
+
+    public List<UmsRole> selectRoleByUmsAdminId(Long adminId);
+
+    public int updateUmsAdminWithRoleId(Long adminId, List<Long> roleIds);
+
+    public String login(String username, String password);
+    public UserDetails loadUserByUsername(String username);
+    public UmsAdmin getAdminByUsername(String username);
+    public List<UmsResource> getResourceList(Long adminId);
 }
