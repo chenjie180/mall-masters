@@ -1,11 +1,10 @@
 package cn.com.sparknet.mall.security.config;
 
 
-import cn.com.sparknet.mall.security.component.JwtAuthenticationTokenFilter;
-import cn.com.sparknet.mall.security.component.RestAuthenticationEntryPoint;
-import cn.com.sparknet.mall.security.component.RestfulAccessDeniedHandler;
+import cn.com.sparknet.mall.security.component.*;
 import cn.com.sparknet.mall.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -159,7 +158,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return
      */
-   /* @ConditionalOnBean(name = "dynamicSecurityService")
+    @ConditionalOnBean(name = "dynamicSecurityService")
     @Bean
     public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
         return new DynamicAccessDecisionManager();
@@ -176,5 +175,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
         return new DynamicSecurityMetadataSource();
-    }*/
+    }
 }

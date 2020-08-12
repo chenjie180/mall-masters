@@ -1,12 +1,28 @@
 package cn.com.sparknet.mall.security.component;
 
-/**
+import cn.com.sparknet.mall.security.config.IgnoreUrlsConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
+import org.springframework.security.access.intercept.InterceptorStatusToken;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+/**1
  * 动态权限过滤器，用于实现基于路径的动态权限过滤
  * Created by macro on 2020/2/7.
  */
-public class DynamicSecurityFilter/* extends AbstractSecurityInterceptor implements Filter*/ {
+public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
-   /* @Autowired
+
+
+    @Autowired
     private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
@@ -14,6 +30,25 @@ public class DynamicSecurityFilter/* extends AbstractSecurityInterceptor impleme
     @Autowired
     public void setMyAccessDecisionManager(DynamicAccessDecisionManager dynamicAccessDecisionManager) {
         super.setAccessDecisionManager(dynamicAccessDecisionManager);
+    }
+
+    /**
+     * AbstractSecurityInterceptor抽象类
+     * FilterInvocation为下面做铺垫
+     * @return
+     */
+    @Override
+    public Class<?> getSecureObjectClass() {
+        return FilterInvocation.class;
+    }
+
+    /**
+     * AbstractSecurityInterceptor抽象类
+     * @return
+     */
+    @Override
+    public SecurityMetadataSource obtainSecurityMetadataSource() {
+        return dynamicSecurityMetadataSource;
     }
 
     @Override
@@ -50,14 +85,6 @@ public class DynamicSecurityFilter/* extends AbstractSecurityInterceptor impleme
     public void destroy() {
     }
 
-    @Override
-    public Class<?> getSecureObjectClass() {
-        return FilterInvocation.class;
-    }
 
-    @Override
-    public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return dynamicSecurityMetadataSource;
-    }
-*/
+
 }

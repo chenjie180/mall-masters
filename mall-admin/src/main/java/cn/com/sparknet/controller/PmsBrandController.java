@@ -8,7 +8,6 @@ import cn.com.sparknet.service.PmsBrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ import java.util.List;
 public class PmsBrandController {
     @Autowired
     private PmsBrandService pmsBrandService;
-    @PreAuthorize("hasAuthority('pms:brand:read')")
+//    @PreAuthorize("hasAuthority('pms:brand:read')")
     @ApiOperation("分页查询品牌集合")
     @RequestMapping(value = "brand/list",method = RequestMethod.POST)
     public CommonResult<CommonPage<PmsBrand>> selectBrandListbyPage(@RequestParam("name") String name,

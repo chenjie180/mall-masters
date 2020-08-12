@@ -1,16 +1,28 @@
 package cn.com.sparknet.mall.security.component;
 
-/**
+import cn.hutool.core.util.URLUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
+
+/**2
  * 动态权限数据源，用于获取动态权限规则
  * Created by macro on 2020/2/7.
  */
-public class DynamicSecurityMetadataSource /*implements FilterInvocationSecurityMetadataSource*/ {
+public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-   /* private static Map<String, ConfigAttribute> configAttributeMap = null;
+
+    private static Map<String, ConfigAttribute> configAttributeMap = null;
     @Autowired
     private DynamicSecurityService dynamicSecurityService;
 
-    @PostConstruct
+    @PostConstruct//调用的时候执行
     public void loadDataSource() {
         configAttributeMap = dynamicSecurityService.loadDataSource();
     }
@@ -49,5 +61,5 @@ public class DynamicSecurityMetadataSource /*implements FilterInvocationSecurity
     public boolean supports(Class<?> aClass) {
         return true;
     }
-*/
+
 }
